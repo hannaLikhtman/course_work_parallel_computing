@@ -9,9 +9,7 @@ import java.util.Map;
 
 public class Main {
     //Hence we can alter number of threads to execute program
-    public static int THREADS = 500;
-
-    private static long doThreads(int threads) throws IOException{
+    private static long doThreads(int threads) throws IOException {
         Files filesClass = new Files();
         filesClass.setFilepath("D:\\Study\\Parallel computing\\aclImdb\\");
 
@@ -23,7 +21,7 @@ public class Main {
         InvertIndexerThread[] ThreadArray = new InvertIndexerThread[threads];
 
         //run all threads
-        for(int i = 0; i < threads; i++) {
+        for (int i = 0; i < threads; i++) {
             ThreadArray[i] = new InvertIndexerThread(files.size() / threads * i,
                     i == (threads - 1) ? files.size() : files.size() / threads * (i + 1),
                     files);
@@ -49,11 +47,14 @@ public class Main {
         }
 
         long processingTime = (System.currentTimeMillis() - start);
-        System.out.println("Threads: " + threads + "    Processing time: " + processingTime);
+        System.out.println("Threads: " + threads + "    Processing time: " + processingTime + "ms");
 
+        String writeToFilepath = "D:\\Study\\Parallel computing\\InvertedIdx.txt";
+
+        new FileWriter(writeToFilepath, false).close();
         //Write down index in file
-        FileWriter fw = new FileWriter( "D:\\Study\\Parallel computing\\InvertedIdx.txt" );
-        for(Map.Entry<String, ArrayList<String>> entry: FullInvertedIndex.entrySet()) {
+        FileWriter fw = new FileWriter(writeToFilepath);
+        for (Map.Entry<String, ArrayList<String>> entry : FullInvertedIndex.entrySet()) {
             fw.write(entry.getKey() + " : " + entry.getValue() + "\n");
         }
 
@@ -63,7 +64,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         int[] threadNum = {1, 10, 50, 100, 500, 1000, 5000};
-        for (int threads: threadNum ) {
+        for (int threads : threadNum) {
             doThreads(threads);
         }
     }
