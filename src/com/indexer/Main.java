@@ -11,26 +11,27 @@ public class Main {
     //Hence we can alter number of threads to execute program
     public static int THREADS = 500;
 
-    public static void main(String[] args) throws IOException {
+    private static long doThreads(int threads) throws IOException{
         Files filesClass = new Files();
         filesClass.setFilepath("D:\\Study\\Parallel computing\\aclImdb\\");
 
         ArrayList<File> files = filesClass.getFiles();
-        HashMap<String, ArrayList<String>> FullInvertedIndex = new HashMap<String, ArrayList<String>>();
+
         long start = System.currentTimeMillis();
 
-        InvertIndexerThread[] ThreadArray = new InvertIndexerThread[THREADS];
+        HashMap<String, ArrayList<String>> FullInvertedIndex = new HashMap<String, ArrayList<String>>();
+        InvertIndexerThread[] ThreadArray = new InvertIndexerThread[threads];
 
         //run all threads
-        for(int i = 0; i < THREADS; i++) {
-            ThreadArray[i] = new InvertIndexerThread(files.size() / THREADS * i,
-                    i == (THREADS - 1) ? files.size() : files.size() / THREADS * (i + 1),
+        for(int i = 0; i < threads; i++) {
+            ThreadArray[i] = new InvertIndexerThread(files.size() / threads * i,
+                    i == (threads - 1) ? files.size() : files.size() / threads * (i + 1),
                     files);
             ThreadArray[i].start();
         }
 
         //join threads
-        for (int i = 0; i < THREADS; i++) {
+        for (int i = 0; i < threads; i++) {
             try {
                 ThreadArray[i].join();
             } catch (InterruptedException e) {
@@ -39,7 +40,7 @@ public class Main {
         }
 
         //process threads to map values into indexer
-        for (int OneThread = 0; OneThread < THREADS; OneThread++) {
+        for (int OneThread = 0; OneThread < threads; OneThread++) {
             ThreadArray[OneThread].getInvertedIdx().forEach((k, v) -> FullInvertedIndex.merge(k, v, (v1, v2) -> {
                 ArrayList<String> list = new ArrayList<>(v1);
                 list.addAll(v2);
@@ -47,7 +48,8 @@ public class Main {
             }));
         }
 
-        System.out.println("Processing time: " + (System.currentTimeMillis() - start));
+        long processingTime = (System.currentTimeMillis() - start);
+        System.out.println("Threads: " + threads + "    Processing time: " + processingTime);
 
         //Write down index in file
         FileWriter fw = new FileWriter( "D:\\Study\\Parallel computing\\InvertedIdx.txt" );
@@ -56,5 +58,13 @@ public class Main {
         }
 
         fw.close();
+        return processingTime;
+    }
+
+    public static void main(String[] args) throws IOException {
+        int[] threadNum = {1, 10, 50, 100, 500, 1000, 5000};
+        for (int threads: threadNum ) {
+            doThreads(threads);
+        }
     }
 }
