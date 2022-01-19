@@ -12,8 +12,9 @@ public class Main {
     public static int THREADS = 500;
 
     public static void main(String[] args) throws IOException {
-
-        ArrayList<File> files = new Files().getFiles();
+        Files filesClass = new Files();
+        filesClass.setFilepath("D:\\Study\\Parallel computing\\aclImdb\\");
+        ArrayList<File> files = filesClass.getFiles();
 
         HashMap<String, ArrayList<String>> FullInvertedIndex = new HashMap<String, ArrayList<String>>();
 
@@ -46,7 +47,7 @@ public class Main {
 
         System.out.println("Processing time: " + (System.currentTimeMillis() - start));
 
-        FileWriter fw = new FileWriter( "C:\\InvertedIdx.txt" );
+        FileWriter fw = new FileWriter( "D:\\InvertedIdx.txt" );
 
         for(Map.Entry<String, ArrayList<String>> entry: FullInvertedIndex.entrySet()) {
             fw.write(entry.getKey() + " : " + entry.getValue() + "\n");

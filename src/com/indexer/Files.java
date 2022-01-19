@@ -23,7 +23,7 @@ public class Files {
     //Constants used to bear with files
     private int num1 = 12500;
     private int num2 = 50000;
-    private String filepath = "D:\\Study\\Parallel computing\\";
+    private String filepath = "D:\\";
     private int variant = 7;
 
     //Files and folders
