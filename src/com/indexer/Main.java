@@ -49,7 +49,7 @@ public class Main {
         long processingTime = (System.currentTimeMillis() - start);
         System.out.println("Threads: " + threads + "    Processing time: " + processingTime + "ms");
 
-        String writeToFilepath = "D:\\Study\\Parallel computing\\InvertedIdx.txt";
+        String writeToFilepath = "D:\\Study\\Parallel computing\\InvertedIdx" + threads + ".txt";
 
         new FileWriter(writeToFilepath, false).close();
         //Write down index in file
@@ -63,7 +63,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        int[] threadNum = {1, 10, 50, 100, 500, 1000, 5000};
+        int[] threadNum = {1, 5, 10, 50, 100};
         for (int threads : threadNum) {
             doThreads(threads);
         }
