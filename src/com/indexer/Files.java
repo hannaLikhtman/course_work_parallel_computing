@@ -4,32 +4,16 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Files {
-    public int getNum1() {
-        return num1;
-    }
-
     public void setNum1(int num1) {
         this.num1 = num1;
-    }
-
-    public int getNum2() {
-        return num2;
     }
 
     public void setNum2(int num2) {
         this.num2 = num2;
     }
 
-    public String getFilepath() {
-        return filepath;
-    }
-
     public void setFilepath(String filepath) {
         this.filepath = filepath;
-    }
-
-    public int getVariant() {
-        return variant;
     }
 
     public void setVariant(int variant) {
