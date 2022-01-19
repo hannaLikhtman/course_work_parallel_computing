@@ -44,22 +44,21 @@ public class InvertIndexerThread extends Thread {
 
                 int PositionInFile = 1;
 
-                for(String word: words) {
-                    if(HashMapOneThread.containsKey(word)) {
+                for (String word : words) {
+                    if (HashMapOneThread.containsKey(word)) {
                         ArrayList<String> list = HashMapOneThread.get(word);
                         list.add(String.valueOf(PositionInFile));
                         HashMapOneThread.put(word, list);
-                    }
-                    else {
+                    } else {
                         ArrayList<String> list = new ArrayList<String>();
                         list.add(String.valueOf(PositionInFile));
                         HashMapOneThread.put(word, list);
                     }
 
-                    PositionInFile ++;
+                    PositionInFile++;
                 }
 
-                for (String word: words) {
+                for (String word : words) {
                     ArrayList<String> list = HashMapOneThread.get(word);
 
                     if (!list.contains(String.valueOf(processingFiles.get(idx)))) {
@@ -67,7 +66,7 @@ public class InvertIndexerThread extends Thread {
                         HashMapOneThread.put(word, list);
                     }
                 }
-            }catch (IOException e) {
+            } catch (IOException e) {
                 System.out.println("File: " + processingFiles.get(idx) + " not found.");
             }
         }
