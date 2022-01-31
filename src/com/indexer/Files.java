@@ -21,8 +21,8 @@ public class Files {
     }
 
     //Constants used to bear with files
-    private int num1 = 12500;
-    private int num2 = 50000;
+    private int num1 = 250;
+    private int num2 = 1000;
     private String filepath = "D:\\";
     private int variant = 7;
 

@@ -10,11 +10,11 @@ import java.util.HashMap;
 
 public class InvertIndexerThread extends Thread {
 
-    int startIndex;
-    int endIndex;
+    private int startIndex;
+    private int endIndex;
 
-    ArrayList<File> processingFiles;
-    HashMap<String, ArrayList<String>> HashMapOneThread = new HashMap<String, ArrayList<String>>();
+    private ArrayList<File> processingFiles;
+    private HashMap<String, ArrayList<String>> HashMapOneThread = new HashMap<String, ArrayList<String>>();
 
     public InvertIndexerThread(int startIndex, int endIndex, ArrayList<File> processingFiles) {
         this.startIndex = startIndex;

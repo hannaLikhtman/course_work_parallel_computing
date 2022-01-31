@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Main {
     //Hence we can alter number of threads to execute program
@@ -46,15 +47,18 @@ public class Main {
             }));
         }
 
+
         long processingTime = (System.currentTimeMillis() - start);
         System.out.println("Threads: " + threads + "    Processing time: " + processingTime + "ms");
 
         String writeToFilepath = "D:\\Study\\Parallel computing\\InvertedIdx" + threads + ".txt";
 
+        TreeMap<String, ArrayList<String>> sortedInvertedIndex = convertToTreeMap(FullInvertedIndex);
+
         new FileWriter(writeToFilepath, false).close();
         //Write down index in file
         FileWriter fw = new FileWriter(writeToFilepath);
-        for (Map.Entry<String, ArrayList<String>> entry : FullInvertedIndex.entrySet()) {
+        for (Map.Entry<String, ArrayList<String>> entry : sortedInvertedIndex.entrySet()) {
             fw.write(entry.getKey() + " : " + entry.getValue() + "\n");
         }
 
@@ -62,8 +66,21 @@ public class Main {
         return processingTime;
     }
 
+    public static TreeMap<String, ArrayList<String>> convertToTreeMap(HashMap<String, ArrayList<String>> hashMap) {
+        // Create a new TreeMap
+        TreeMap<String, ArrayList<String>> treeMap = new TreeMap<>();
+
+        // Convert the HashMap to TreeMap manually
+        for (Map.Entry<String, ArrayList<String>> e : hashMap.entrySet()) {
+            treeMap.put(e.getKey(), e.getValue());
+        }
+
+        // Return the TreeMap
+        return treeMap;
+    }
+
     public static void main(String[] args) throws IOException {
-        int[] threadNum = {1, 5, 10, 50, 100};
+        int[] threadNum = {4};
         for (int threads : threadNum) {
             doThreads(threads);
         }
